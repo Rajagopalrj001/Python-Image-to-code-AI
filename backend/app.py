@@ -11,11 +11,11 @@ import requests
 import os
 from dotenv import load_dotenv
 
-# Render should already have Tesseract installed in the system path
+pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load environment variables
 load_dotenv()
