@@ -11,8 +11,8 @@ import requests
 import os
 from dotenv import load_dotenv
 
-# Configure Tesseract path
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# Render should already have Tesseract installed in the system path
+
 
 app = Flask(__name__)
 CORS(app)
@@ -128,11 +128,12 @@ def process_image():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    from os import environ
+    app.run(host="0.0.0.0", port=int(environ.get("PORT", 5000)))
 
 
 
-# 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 
+
 
 
 
