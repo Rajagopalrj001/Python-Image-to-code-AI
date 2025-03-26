@@ -9,6 +9,8 @@ from PIL import Image
 from sklearn.cluster import KMeans
 import requests
 import os
+import logging
+import traceback
 from dotenv import load_dotenv
 
 pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
@@ -19,6 +21,13 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Load environment variables
 load_dotenv()
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    error_message = traceback.format_exc()
+    app.logger.error(f"Full Error Traceback:\n{error_message}")
+    return jsonify({"error": str(e)}), 500
 
 # Set your Groq API token
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
