@@ -99,6 +99,11 @@ def refine_with_groq(html_code):
     except Exception as e:
         return f"API Error: {str(e)}"
 
+
+@app.route("/")
+def home():
+    return "Flask API is running!", 200
+
 @app.route("/process", methods=["POST"])
 def process_image():
     try:
@@ -134,6 +139,7 @@ def process_image():
         return jsonify({"html": refined_html})
     
     except Exception as e:
+        app.logger.error(f"Error processing image: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
